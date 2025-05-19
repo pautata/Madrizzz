@@ -4,7 +4,7 @@ import {
   View, Text, TextInput,
   TouchableOpacity, StyleSheet, Alert
 } from 'react-native';
-import { auth } from './components/firebaseConfig.js';
+import { auth } from './FirebaseConfig';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword

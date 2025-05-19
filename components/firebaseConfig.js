@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-const firebaseConfig = {
+const FirebaseConfig = {
   apiKey: "TU_API_KEY",
   authDomain: "tu-app.firebaseapp.com",
   projectId: "tu-app",
@@ -11,5 +11,5 @@ const firebaseConfig = {
   appId: "TU_APP_ID"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(FirebaseConfig);
 export const auth = getAuth(app);
