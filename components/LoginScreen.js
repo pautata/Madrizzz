@@ -1,28 +1,34 @@
-// components/LoginScreen.js
 import React, { useState } from 'react';
 import {
-  View, Text, TextInput,
-  TouchableOpacity, StyleSheet, Alert
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Alert
 } from 'react-native';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './FirebaseConfig';
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
-} from 'firebase/auth';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isRegister, setIsRegister] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const handleAuth = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Por favor, introduce email y contraseña.');
+      return;
+    }
+
     try {
-      if (isRegister) {
+      if (isRegistering) {
         await createUserWithEmailAndPassword(auth, email, password);
+        Alert.alert('Registro exitoso', 'Ya puedes usar tu cuenta');
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
-      navigation.replace('Swipes');
     } catch (error) {
       Alert.alert('Error', error.message);
     }
@@ -30,19 +36,16 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {isRegister ? 'Regístrate' : 'Inicia sesión'}
-      </Text>
+      <Text style={styles.title}>{isRegistering ? 'Registrarse' : 'Iniciar Sesión'}</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="Correo electrónico"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
         autoCapitalize="none"
+        keyboardType="email-address"
       />
-
       <TextInput
         style={styles.input}
         placeholder="Contraseña"
@@ -51,20 +54,16 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleAuth}>
-        <Text style={styles.buttonText}>
-          {isRegister ? 'Registrarme' : 'Entrar'}
-        </Text>
-      </TouchableOpacity>
+      <Button
+        title={isRegistering ? "Registrarse" : "Entrar"}
+        onPress={handleAuth}
+      />
 
-      <TouchableOpacity
-        onPress={() => setIsRegister(r => !r)}
-        style={styles.switchContainer}
-      >
-        <Text style={styles.switchText}>
-          {isRegister
-            ? '¿Ya tienes cuenta? Inicia sesión'
-            : '¿No tienes cuenta? Regístrate'}
+      <TouchableOpacity onPress={() => setIsRegistering(!isRegistering)}>
+        <Text style={styles.toggle}>
+          {isRegistering
+            ? "¿Ya tienes cuenta? Inicia sesión"
+            : "¿No tienes cuenta? Regístrate"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -73,31 +72,27 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, justifyContent: 'center',
-    padding: 20, backgroundColor: 'white'
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 30,
+    backgroundColor: '#fff'
   },
   title: {
-    fontSize: 24, fontWeight: 'bold',
-    marginBottom: 20, textAlign: 'center'
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center'
   },
   input: {
-    borderWidth: 1, borderColor: '#ccc',
-    borderRadius: 4, padding: 10,
-    marginBottom: 12
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    borderRadius: 8
   },
-  button: {
-    backgroundColor: '#64EDCC',
-    padding: 12,
-    borderRadius: 4,
-    alignItems: 'center'
-  },
-  buttonText: {
-    color: 'white', fontWeight: 'bold'
-  },
-  switchContainer: {
-    marginTop: 12, alignItems: 'center'
-  },
-  switchText: {
-    color: '#64EDCC'
+  toggle: {
+    marginTop: 20,
+    textAlign: 'center',
+    color: '#007bff'
   }
 });
