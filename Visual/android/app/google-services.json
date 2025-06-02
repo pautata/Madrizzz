@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "938450749179",
+    "project_id": "madrizzz",
+    "storage_bucket": "madrizzz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938450749179:android:573c7c34781eee2507d25e",
+        "android_client_info": {
+          "package_name": "com.planesmadrid.madrizzz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSBrEzKAWZOWTwnwbzNgMLWaD9VXOI8ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
