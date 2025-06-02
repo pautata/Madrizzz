@@ -21,7 +21,7 @@ const getHost = () => {
   return 'localhost'
 }
 
-const host = '85f0-88-26-76-255.ngrok-free.app'
+const host = 'bbcc-88-26-76-255.ngrok-free.app'
 
 export const api = axios.create({
   baseURL: `https://${host}/api`,
