@@ -1,4 +1,3 @@
-// src/main/java/com/planesmadrid/apimadrid/model/Horario.java
 package com.planesmadrid.apimadrid.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -6,16 +5,13 @@ import jakarta.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "HORARIO") // opcional, Hibernate ya infiere HORARIO en mayúsculas
+@Table(name = "HORARIO")
 public class Horario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * Ahora se llama diaInicio y se mapea a la columna DIA_INICIO en la base.
-     */
     @Enumerated(EnumType.STRING)
     @Column(name = "DIA_INICIO", nullable = false)
     private Dia diaInicio;
@@ -26,18 +22,13 @@ public class Horario {
     @Column(name = "HORA_FIN", nullable = false)
     private LocalTime horaFin;
 
-    /**
-     * Nuevo campo para indicar si el horario cruza la medianoche.
-     */
     @Column(name = "CRUZA_MEDIANOCHE", nullable = false)
     private boolean cruzaMedianoche;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PLAN_ID", nullable = false)
-    @JsonBackReference
+    @JsonBackReference // para evitar un bucle infinito de plan y horario
     private Plan plan;
-
-    // ─── Getters y setters ───────────────────────────────────────────────────
 
     public Long getId() {
         return id;

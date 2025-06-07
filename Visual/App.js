@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, View, Alert } from 'react-native'
 import Constants from 'expo-constants'
@@ -39,13 +38,11 @@ export default function App() {
   const [finished,     setFinished]     = useState(false)
   const swipesRef = useRef(null)
 
-  // 1) Observa el estado de autenticación
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => setUser(u))
     return () => unsub()
   }, [])
 
-  // 2) Cuando cambian user o filtros → fetch planes
   useEffect(() => {
     if (!user) return
     ;(async () => {
@@ -61,30 +58,36 @@ export default function App() {
         })
         setPlans(data)
         setCurrentIndex(0)
-        setFinished(false)
+        if (data.length === 0) {
+          setFinished(true)
+        } else {
+          setFinished(false)
+        }
       } catch (err) {
         Alert.alert('Error al obtener los planes', err.message)
       }
     })()
   }, [filters, user])
 
-  // 3) Suscripción a Firestore → favoritos “por usuario”
   useEffect(() => {
     if (!user) return
     const unsub = subscribeToFavorites(setFavorites)
     return () => unsub()
   }, [user])
 
-  // 4) Filtros
   const openFilters  = () => setFiltersVisible(true)
   const applyFilters = nf => { setFilters(nf); setFiltersVisible(false) }
 
-  // 5) Swipe + favoritos
   const nextPlan = () => {
-    if (currentIndex < plans.length - 1) setCurrentIndex(i => i + 1)
-    else setFinished(true)
+    if (currentIndex < plans.length - 1) {
+      setCurrentIndex(i => i + 1)
+    } else {
+      setFinished(true)
+    }
   }
+
   const handleLike = async () => {
+    if (finished || plans.length === 0) return
     const plan = plans[currentIndex]
     try {
       await addFavorite(plan)
@@ -93,17 +96,24 @@ export default function App() {
       Alert.alert('Error al guardar favorito', e.message)
     }
   }
-  const handlePass = () => nextPlan()
+
+  const handlePass = () => {
+    if (finished || plans.length === 0) return
+    nextPlan()
+  }
+
   const handleLikePress = () => {
+    if (finished || plans.length === 0) return
     swipesRef.current?.openLeft()
     handleLike()
   }
+
   const handlePassPress = () => {
+    if (finished || plans.length === 0) return
     swipesRef.current?.openRight()
     handlePass()
   }
 
-  // 6) Logout
   const handleLogout = async () => {
     try {
       await signOut(auth)
@@ -112,10 +122,8 @@ export default function App() {
     }
   }
 
-  // 7) Si no hay user → Login
   if (!user) return <LoginScreen />
 
-  // 8) Navegación
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

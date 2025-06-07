@@ -1,5 +1,4 @@
-// components/LoginScreen.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   View,
   Text,
@@ -8,220 +7,190 @@ import {
   StyleSheet,
   Alert,
   Platform,
-} from "react-native";
-import { auth } from "./FirebaseConfig";
+} from "react-native"
+import { FontAwesome } from "@expo/vector-icons"
+import { auth } from "./FirebaseConfig"
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-} from "firebase/auth";
-
-// Importa el modal de Términos y condiciones
-import TermsModal from "./TermsModal";
+} from "firebase/auth"
+import TermsModal from "./TermsModal"
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [birthday, setBirthday] = useState("")
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [isNewAccount, setIsNewAccount] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showTermsModal, setShowTermsModal] = useState(false)
+  const [isLengthValid, setIsLengthValid] = useState(false)
+  const [hasNumber, setHasNumber] = useState(false)
+  const [hasUppercase, setHasUppercase] = useState(false)
+  const [hasSymbol, setHasSymbol] = useState(false)
 
-  // Campos extra para registro:
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [birthday, setBirthday] = useState(""); // Formato YYYY-MM-DD
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
-  const [isNewAccount, setIsNewAccount] = useState(false);
-
-  // Estado para mostrar/ocultar el modal de Términos y condiciones
-  const [showTermsModal, setShowTermsModal] = useState(false);
-
-  // Estados para validación en tiempo real de la contraseña:
-  const [isLengthValid, setIsLengthValid] = useState(false);
-  const [hasNumber, setHasNumber] = useState(false);
-  const [hasUppercase, setHasUppercase] = useState(false);
-  const [hasSymbol, setHasSymbol] = useState(false);
-
-  // Cada vez que cambia `password`, recalculamos las validaciones:
   useEffect(() => {
-    // Mínimo 6 caracteres
-    setIsLengthValid(password.length >= 6);
-    // Al menos un número
-    setHasNumber(/\d/.test(password));
-    // Al menos una mayúscula
-    setHasUppercase(/[A-Z]/.test(password));
-    // Al menos un símbolo (cualquier cosa que no sea letra ni número)
-    setHasSymbol(/[^A-Za-z0-9]/.test(password));
-  }, [password]);
+    setIsLengthValid(password.length >= 6)
+    setHasNumber(/\d/.test(password))
+    setHasUppercase(/[A-Z]/.test(password))
+    setHasSymbol(/[^A-Za-z0-9]/.test(password))
+  }, [password])
 
-  // Helper para parsear fecha YYYY-MM-DD
   const parseDate = (str) => {
-    const parts = str.split("-");
-    if (parts.length !== 3) return null;
-    const [y, m, d] = parts.map((p) => parseInt(p, 10));
+    const parts = str.split("-")
+    if (parts.length !== 3) return null
+    const [dStr, mStr, yStr] = parts
+    const d = parseInt(dStr, 10)
+    const m = parseInt(mStr, 10)
+    const y = parseInt(yStr, 10)
     if (
       isNaN(y) ||
       isNaN(m) ||
       isNaN(d) ||
+      y < 1899 ||
       m < 1 ||
       m > 12 ||
       d < 1 ||
       d > 31
     ) {
-      return null;
+      return null
     }
-    const date = new Date(y, m - 1, d);
+    const date = new Date(y, m - 1, d)
     if (
       date.getFullYear() !== y ||
       date.getMonth() + 1 !== m ||
       date.getDate() !== d
     ) {
-      return null;
+      return null
     }
-    return date;
-  };
+    return date
+  }
 
-  // Devuelve true si la fecha es hace al menos 18 años
   const isOlderThan18 = (date) => {
-    if (!date) return false;
-    const now = new Date();
-    const diffY = now.getFullYear() - date.getFullYear();
-    if (diffY > 18) return true;
-    if (diffY < 18) return false;
-    if (now.getMonth() > date.getMonth()) return true;
-    if (now.getMonth() < date.getMonth()) return false;
-    return now.getDate() >= date.getDate();
-  };
+    if (!date) return false
+    const now = new Date()
+    const diffY = now.getFullYear() - date.getFullYear()
+    if (diffY > 18) return true
+    if (diffY < 18) return false
+    if (now.getMonth() > date.getMonth()) return true
+    if (now.getMonth() < date.getMonth()) return false
+    return now.getDate() >= date.getDate()
+  }
 
-  // Mapeo de códigos de error de Firebase a mensajes en español
   const firebaseErrorMessages = {
-    // Registro
     "auth/email-already-in-use":
       "Error. El correo ya está registrado. Usa otro o inicia sesión.",
     "auth/invalid-email": "Error. El correo no tiene un formato válido.",
     "auth/weak-password":
       "Error. La contraseña es demasiado corta. Debe tener al menos 6 caracteres.",
-    // Login
     "auth/user-not-found":
       "Error. No existe ninguna cuenta con ese correo.",
     "auth/wrong-password": "Error. La contraseña es incorrecta.",
     "auth/too-many-requests":
       "Error. Has intentado demasiadas veces. Reintenta más tarde.",
-    // Recuperar contraseña
     "auth/missing-email": "Error. Debes proporcionar un correo.",
     "auth/invalid-credential":
       "Error. El correo o la contraseña son incorrectos o no existe la cuenta.",
     "auth/user-disabled":
       "Error. Esta cuenta ha sido deshabilitada. Contacta al administrador.",
-    // Otros errores genéricos
     default: (code) => `Error: ${code}`,
-  };
+  }
 
-  // Traduce un código de error de Firebase a español
   const translateFirebaseError = (error) => {
-    const key = error.code;
+    const key = error.code
     if (firebaseErrorMessages[key]) {
-      // Si es un string fijo:
       if (typeof firebaseErrorMessages[key] === "string") {
-        return firebaseErrorMessages[key];
+        return firebaseErrorMessages[key]
       }
-      // Si es función (para mensajes dinámicos):
-      return firebaseErrorMessages[key](error.code);
+      return firebaseErrorMessages[key](error.code)
     }
-    return firebaseErrorMessages.default(error.code);
-  };
+    return firebaseErrorMessages.default(error.code)
+  }
 
   const handleAuth = async () => {
     try {
+      if (!email || !email.includes("@")) {
+        Alert.alert("Error", "Introduce un correo válido.")
+        return
+      }
+
       if (isNewAccount) {
-        // 1) Contraseña y confirmPassword coinciden
-        if (password !== confirmPassword) {
-          Alert.alert("Error", "Las contraseñas no coinciden.");
-          return;
-        }
-
-        // 2) Validar email básico
-        if (!email || !email.includes("@")) {
-          Alert.alert("Error", "Introduce un correo válido.");
-          return;
-        }
-
-        // 3) Validar cumpleaños: formato y > 18 años
-        const dateObj = parseDate(birthday);
-        if (!dateObj) {
-          Alert.alert(
-            "Error",
-            "Introduce tu fecha de nacimiento en formato YYYY-MM-DD."
-          );
-          return;
-        }
-        if (!isOlderThan18(dateObj)) {
-          Alert.alert(
-            "Error",
-            "Debes tener al menos 18 años para registrarte."
-          );
-          return;
-        }
-
-        // 4) Validar términos y condiciones aceptados
-        if (!acceptedTerms) {
-          Alert.alert(
-            "Error",
-            "Debes aceptar los términos y condiciones para registrarte."
-          );
-          return;
-        }
-
-        // 5) Validar mínima longitud de contraseña (≥ 6)
         if (!isLengthValid) {
           Alert.alert(
             "Error",
             "La contraseña debe tener al menos 6 caracteres."
-          );
-          return;
+          )
+          return
         }
 
-        // Finalmente, crear cuenta
-        await createUserWithEmailAndPassword(auth, email, password);
+        if (password !== confirmPassword) {
+          Alert.alert("Error", "Las contraseñas no coinciden.")
+          return
+        }
+
+        const dateObj = parseDate(birthday)
+        if (!dateObj) {
+          Alert.alert(
+            "Error",
+            "Introduce tu fecha de nacimiento en formato DD-MM-YYYY y asegúrate de que sea una fecha válida."
+          )
+          return
+        }
+        if (!isOlderThan18(dateObj)) {
+          Alert.alert("Error", "Debes tener al menos 18 años para registrarte.")
+          return
+        }
+
+        if (!acceptedTerms) {
+          Alert.alert(
+            "Error",
+            "Debes aceptar los términos y condiciones para registrarte."
+          )
+          return
+        }
+
+        await createUserWithEmailAndPassword(auth, email, password)
       } else {
-        // Modo login
         if (!email || !password) {
-          Alert.alert("Error", "Introduce email y contraseña.");
-          return;
+          Alert.alert("Error", "Introduce email y contraseña.")
+          return
         }
-        await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, password)
       }
-      // Si todo va bien, App.js detectará el cambio de auth y navegará solo
     } catch (error) {
-      const mensaje = translateFirebaseError(error);
-      Alert.alert("Error", mensaje);
+      const mensaje = translateFirebaseError(error)
+      Alert.alert("Error", mensaje)
     }
-  };
+  }
 
-  // Envía correo de recuperación de contraseña
   const handlePasswordReset = async () => {
     if (!email || !email.includes("@")) {
       Alert.alert(
         "Error",
         "Introduce un correo válido para recuperar contraseña."
-      );
-      return;
+      )
+      return
     }
     try {
-      await sendPasswordResetEmail(auth, email);
+      await sendPasswordResetEmail(auth, email)
       Alert.alert(
-        "Comprobar tu correo",
+        "¡Correo enviado!",
         "Te hemos enviado un email para restablecer tu contraseña."
-      );
+      )
     } catch (error) {
-      const mensaje = translateFirebaseError(error);
-      Alert.alert("Error", mensaje);
+      const mensaje = translateFirebaseError(error)
+      Alert.alert("Error", mensaje)
     }
-  };
+  }
 
-  // Calcula cuántos requisitos de contraseña están cumplidos (0 a 4)
   const strengthScore =
     (isLengthValid ? 1 : 0) +
     (hasNumber ? 1 : 0) +
     (hasUppercase ? 1 : 0) +
-    (hasSymbol ? 1 : 0);
+    (hasSymbol ? 1 : 0)
 
   return (
     <View style={styles.container}>
@@ -238,17 +207,28 @@ export default function LoginScreen() {
         autoCapitalize="none"
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.inputFlex}
+          placeholder="Contraseña"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity
+          style={styles.eyeIcon}
+          onPress={() => setShowPassword((prev) => !prev)}
+        >
+          <FontAwesome
+            name={showPassword ? "eye" : "eye-slash"}
+            size={20}
+            color="#555"
+          />
+        </TouchableOpacity>
+      </View>
 
       {isNewAccount && (
         <>
-          {/* ─── Barra de fuerza ───────────────────────────────────────────────── */}
           <View style={styles.strengthBarContainer}>
             {[0, 1, 2, 3].map((idx) => (
               <View
@@ -266,7 +246,6 @@ export default function LoginScreen() {
             Fuerza: {strengthScore} de 4
           </Text>
 
-          {/* ─── Validaciones en tiempo real ─────────────────────────────────────── */}
           <View style={styles.validationContainer}>
             <ValidationItem label="Mínimo 6 caracteres" valid={isLengthValid} />
             <Text style={styles.optionalLabel}>
@@ -277,19 +256,29 @@ export default function LoginScreen() {
             <ValidationItem label="Al menos un símbolo" valid={hasSymbol} />
           </View>
 
-          {/* ─── Confirmar contraseña ──────────────────────────────────────────────── */}
-          <TextInput
-            style={styles.input}
-            placeholder="Repite tu contraseña"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.inputFlex}
+              placeholder="Repite tu contraseña"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!showConfirmPassword}
+            />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              <FontAwesome
+                name={showConfirmPassword ? "eye" : "eye-slash"}
+                size={20}
+                color="#555"
+              />
+            </TouchableOpacity>
+          </View>
 
-          {/* ─── Fecha de nacimiento ──────────────────────────────────────────────── */}
           <TextInput
             style={styles.input}
-            placeholder="Fecha de nacimiento (YYYY-MM-DD)"
+            placeholder="Fecha de nacimiento (DD-MM-YYYY)"
             value={birthday}
             onChangeText={setBirthday}
             keyboardType={
@@ -297,7 +286,6 @@ export default function LoginScreen() {
             }
           />
 
-          {/* ─── Términos y condiciones ────────────────────────────────────────────── */}
           <TouchableOpacity
             style={styles.termsContainer}
             onPress={() => setShowTermsModal(true)}
@@ -335,12 +323,13 @@ export default function LoginScreen() {
 
       <TouchableOpacity
         onPress={() => {
-          setIsNewAccount((r) => !r);
-          // Limpieza opcional al cambiar de modo:
-          setPassword("");
-          setConfirmPassword("");
-          setBirthday("");
-          setAcceptedTerms(false);
+          setIsNewAccount((r) => !r)
+          setPassword("")
+          setConfirmPassword("")
+          setBirthday("")
+          setAcceptedTerms(false)
+          setShowPassword(false)
+          setShowConfirmPassword(false)
         }}
         style={styles.switchContainer}
       >
@@ -351,16 +340,14 @@ export default function LoginScreen() {
         </Text>
       </TouchableOpacity>
 
-      {/* ─── Modal de Términos y condiciones ──────────────────────────────────── */}
       <TermsModal
         visible={showTermsModal}
         onClose={() => setShowTermsModal(false)}
       />
     </View>
-  );
+  )
 }
 
-// Componente auxiliar para cada línea de validación
 function ValidationItem({ label, valid }) {
   return (
     <View style={styles.validationItem}>
@@ -374,13 +361,10 @@ function ValidationItem({ label, valid }) {
       </Text>
       <Text style={styles.validationText}>{label}</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  /* ──────────────────────────────────────────────────────────────────────────
-     Layout básico
-  ────────────────────────────────────────────────────────────────────────── */
   container: {
     flex: 1,
     justifyContent: "center",
@@ -453,10 +437,22 @@ const styles = StyleSheet.create({
     height: 14,
     backgroundColor: "#64EDCC",
   },
-
-  /* ──────────────────────────────────────────────────────────────────────────
-     Validación en tiempo real
-  ────────────────────────────────────────────────────────────────────────── */
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    marginBottom: 12,
+    paddingRight: 10,
+  },
+  inputFlex: {
+    flex: 1,
+    padding: 10,
+  },
+  eyeIcon: {
+    padding: 4,
+  },
   validationContainer: {
     marginBottom: 12,
     paddingLeft: 4,
@@ -486,11 +482,6 @@ const styles = StyleSheet.create({
   invalid: {
     color: "red",
   },
-
-  /* ──────────────────────────────────────────────────────────────────────────
-     Barra de fuerza (strength bar)
-     ─ 4 segmentos horizontales, coloreados según score (0–4)
-  ────────────────────────────────────────────────────────────────────────── */
   strengthBarContainer: {
     flexDirection: "row",
     height: 8,
@@ -514,4 +505,4 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textAlign: "right",
   },
-});
+})

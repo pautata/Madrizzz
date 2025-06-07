@@ -1,155 +1,129 @@
--- data.sql (convertido a mayúsculas para que coincida con H2/Hibernate)
-
--- 1) Insertar planes en mayúsculas
 INSERT INTO PLAN (ID, NOMBRE, LOCALIZACION, IMAGEN_URL, PRECIO, URL) 
 VALUES 
-  (1,  'Tour Histórico',         'Plaza Mayor',          'https://picsum.photos/400/600?random=1',   15.00, 'https://tours.madrid.es/historico'),
-  (2,  'Brunch Dominical',       'Malasaña',             'https://picsum.photos/400/600?random=2',   25.50, 'https://brunch.madrid.es/dominical'),
-  (3,  'Concierto de Jazz',      'Chamberí',             'https://picsum.photos/400/600?random=3',   30.00, 'https://madridjazz.es/conciertos'),
-  (4,  'Exposición de Arte',     'Museo del Prado',      'https://picsum.photos/400/600?random=4',   12.00, 'https://prado.es/exposiciones'),
-  (5,  'Cine al Aire Libre',     'Retiro',               'https://picsum.photos/400/600?random=5',    8.00, 'https://cineairelibre.es/retiro'),
-  (6,  'Escape Room',            'Gran Vía',             'https://picsum.photos/400/600?random=6',   20.00, 'https://escaperoom.es/gran-via'),
-  (7,  'Visita Torre de Madrid', 'Torre de Madrid',      'https://picsum.photos/400/600?random=7',   10.00, 'https://torredemadrid.es/visita'),
-  (8,  'Clases de Yoga',         'Lavapiés',             'https://picsum.photos/400/600?random=8',   18.00, 'https://yoga.madrid.es/lavapies'),
-  (9,  'Cena Romántica',         'Chueca',               'https://picsum.photos/400/600?random=9',   40.00, 'https://cenaromantica.es/chueca'),
-  (10, 'Ruta de Tapas',          'La Latina',            'https://picsum.photos/400/600?random=10',  22.00, 'https://rutadetapas.es/latina'),
-  (11, 'Feria de Antigüedades',  'El Rastro',            'https://picsum.photos/400/600?random=11',   0.00,  'https://elrastro.es/feria'),
-  (12, 'Teatro al Aire Libre',   'Parque de la Vaguada', 'https://picsum.photos/400/600?random=12',  15.00, 'https://teatroairelibre.es/vaguada'),
-  (13, 'Tour Gastronómico',      'Paseo del Prado',      'https://picsum.photos/400/600?random=13',  28.00, 'https://gastronomico.es/prado'),
-  (14, 'Trekking en Madrid',     'Sierra de Madrid',     'https://picsum.photos/400/600?random=14',   5.00, 'https://trekking.madrid.es/sierra'),
-  (15, 'Fútbol en el Parque',    'Parque de La Vaguada', 'https://picsum.photos/400/600?random=15',   0.00, 'https://futbolparque.es/vaguada'),
-  (16, 'Clase de Cocina Española','Malasaña',            'https://picsum.photos/400/600?random=16',  35.00, 'https://cocinaespana.es/malasana'),
-  (17, 'Visita al Palacio Real', 'Palacio Real',         'https://picsum.photos/400/600?random=17',  14.00, 'https://palacioreal.es/visita'),
-  (18, 'Rally en Bicicleta',     'Madrid Río',           'https://picsum.photos/400/600?random=18',  12.00, 'https://rallybicicleta.es/rio'),
-  (19, 'Fiesta en la Azotea',    'Centro Madrid',        'https://picsum.photos/400/600?random=19',  20.00, 'https://fiestaazotea.es/centro'),
-  (20, 'Tour en Segway',         'Retiro',               'https://picsum.photos/400/600?random=20',  30.00, 'https://segwaytour.es/retiro'),
-  -- Nuevos planes de prueba:
-  (21, 'Noche de Karaoke',       'Malasaña',             'https://picsum.photos/400/600?random=21',  12.00, 'https://karaoke.madrid.es/malasana'),
-  (22, 'Desfile de Moda',        'Cibeles',              'https://picsum.photos/400/600?random=22',  50.00, 'https://modamadrid.es/cibeles'),
-  (23, 'Picnic en el Retiro',    'Parque del Retiro',    'https://picsum.photos/400/600?random=23',   5.00, 'https://picnicretiro.es'),
-  (24, 'Tour Fotográfico',       'Lavapiés',             'https://picsum.photos/400/600?random=24',  18.00, 'https://fotomadrid.es/lavapies');
+  (1,  'FREE TOUR MADRID',               'PLAZA MAYOR',          'https://www.civitatis.com/f/espana/madrid/galeria/big/catedral-almudena.jpg',  0.00,  'https://www.civitatis.com/es/madrid/free-tour-madrid/'),
+  (2,  'BRUNCH AND FRIENDS',             'MALASAÑA',             'https://static.wixstatic.com/media/ffa181_13be883eb24d4431b8b9c628656a2afe~mv2.jpg/v1/fill/w_2500,h_1665,al_c/ffa181_13be883eb24d4431b8b9c628656a2afe~mv2.jpg',  25.00, 'https://lilobrunch.com/'),
+  (3,  'MUSICA EN DIRECTO',               'BARRIO DE LAS LETRAS',  'https://estaticos.esmadrid.com/cdn/farfuture/V763OyG1TBpdAlP1cahWClUKETYNt5SrFBOYqYx7hAw/mtime:1646740074/sites/default/files/styles/content_type_full/public/recursosturisticos/noche/CafeCentral_1412765300.719.jpg?itok=_TeRUEBA',  10.00, 'https://www.esmadrid.com/noche/cafe-central'),
+  (4,  'EXPOSICION DE ARTE',             'MUSEO DEL PRADO',      'https://www.muyinteresante.com/wp-content/uploads/sites/5/2022/10/14/63494d7b6e812.jpeg',  12.00,  'https://www.museodelprado.es/en/whats-on/exhibitions'),
+  (5,  'CINE AL AIRE LIBRE',             'RETIRO',               'https://diario.madrid.es/retiro/wp-content/uploads/sites/25/2023/06/Proyeccion-cine-de-verano2021_2-1000x750.jpg',   0.00,  'https://madridsecreto.co/cine-verano-retiro/'),
+  (6,  'ESCAPE ROOM',                    'GRAN VÍA',             'https://static.vecteezy.com/system/resources/previews/009/727/060/non_2x/neon-sign-escape-room-with-brick-wall-background-free-vector.jpg',  20.00,  'https://www.thexdoormadrid.com/en/'),
+  (7,  'LANGUAGE EXCHANGE + KARAOKE',     'TRIBUNAL',             'https://t4.ftcdn.net/jpg/04/58/91/89/360_F_458918959_2pNbo0sQBeF5GtRmG2GOSzOjP2t0HS1j.jpg',  0.00,  'https://madridurbanvibes.com/en/event/thursday-language-exchange/'),
+  (8,  'CLASES DE YOGA',                 'LAVAPIÉS',             'https://nosaltresyogalavapies.org/wp-content/uploads/2020/08/pexels-gustavo-fring-4127309-1536x1024.jpg',  18.00,  'https://nosaltresyogalavapies.org/'),
+  (9,  'PUB CRAWL',                      'CHUECA',               'https://images.pexels.com/photos/19095111/pexels-photo-19095111.jpeg',  10.00,  'https://madridurbanvibes.com/event/pubcrawl-madrid/'),
+  (10, 'RUTA DE TAPAS',                 'LA LATINA',            'https://thespanishradish.com/wp-content/uploads/2022/08/la-latina-tapas-hero-1080x.jpg', 22.00,  'https://thespanishradish.com/spanish-radish-blog/la-latina-tapas-tour/'),
+  (11, 'FERIA DE ANTIGÜEDADES',          'EL RASTRO',            'https://cuentamemadrid.es/wp-content/uploads/2019/05/rastro_800_1.jpg',  0.00,   'https://cuentamemadrid.es/el-rastro/'),
+  (12, 'TEATRO AL AIRE LIBRE',           'PARQUE DE LA VAGUADA', 'https://media.timeout.com/images/106182100/750/422/image.jpg',  15.00,  'https://enlavaguada.com/eventos'),
+  (13, 'MERCADILLO DE MINERALES',        'MUSEO GEOMINERO',      'https://media.timeout.com/images/101670913/750/422/image.jpg',  0.00,   'https://www.igme.es/museo/'),
+  (14, 'TREKKING EN MADRID',             'SIERRA DE MADRID',     'https://www.senderismomadrid.es/wp-content/uploads/2015/03/collado-alfrecho.jpg',  5.00,   'https://www.senderismomadrid.es/sierra-cabrera/'),
+  (15, 'FUTBOL EN EL RETIRO',            'RETIRO',               'https://pbs.twimg.com/media/DbjpeFrWsAAmjOe?format=jpg&name=4096x4096',  0.00,   'https://www.centrodeportivosmp.es/smp/instalaciones-fitness-natacion-futbol/'),
+  (16, 'CLASE DE COCINA ESPAÑOLA',       'MALASAÑA',             'https://madrid-experience.com/wp-content/uploads/2014/06/hero-cocina-clase.jpg', 35.00,  'https://madrid-experience.com/clases-privadas-de-cocina-espanola/'),
+  (17, 'VISITA AL PALACIO REAL',         'PALACIO REAL',         'https://i.pinimg.com/736x/ae/59/ef/ae59ef6d650dabc93ecf1d0a8dbd2803.jpg', 14.00,  'https://www.patrimonionacional.es/visita/palacio-real-de-madrid'),
+  (18, 'GRUPO PARA MONTAR EN BICI',      'MADRID RIO',           'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/0b/38/c5/de.jpg',  0.00,   'https://www.amigosmadrid.es/g/salidas-en-bici-madrid'),
+  (19, 'PATINAJE SOBRE RUEDAS',          'ROLLING DANCE & BURGER','https://www.rollingdance.com/wp-content/uploads/2021/11/Captura-de-pantalla-2021-10-29-a-las-11.22.40@2x.png', 10.00,  'https://www.rollingdance.com/'),
+  (20, 'TOUR EN SEGWAY',                 'RETIRO',               'https://cdn.regiondo.net/media/catalog/product/b/i/big-ticket-image-63f524ffdfef0048435472-cropped600-400.jpeg', 30.00,  'https://segwaymadrid.com/?re-product-id=221803&gad_source=1&gad_campaignid=17762920775&gbraid=0AAAAAovRnbE6kfMoy2mUSSShUfxOTWK9U&gclid=Cj0KCQjwgIXCBhDBARIsAELC9ZhU2M93lLZtsWfnL0QtyKO9-DGBUOJYnApSbFqRvRdZWhnRLRX15jYaAhmaEALw_wcB'),
+  (21, 'NOCHE DE KARAOKE',               'MALASAÑA',             'https://es.bam-karaokebox.com/wp-content/uploads/2024/09/sing-and-drink-min.png',  12.00,  'https://es.bam-karaokebox.com/'),
+  (22, 'DESFILE DE MODA',                'CIBELES',              'https://s2.abcstatics.com/abc/www/multimedia/estilo/2025/01/09/aperturadesfiles-RO00oO1nfklxfc7WcswMCFO-1200x840@diario_abc.jpg',  50.00,  'https://www.ifema.es/mbfw-madrid'),
+  (23, 'PICNIC EN EL RETIRO PARA CONOCER GENTE', 'PARQUE DEL RETIRO','https://madride.es/wp-content/uploads/2024/10/Picnic-Madrid-Experience.jpg', 0.00,  'https://madride.es/picnic-experience-actividades-al-aire-libre-en-madrid/'),
+  (24, 'TOUR FOTOGRAFICO',               'LAVAPIÉS',             'https://architoursmad.es/wp-content/uploads/2020/04/muro-tabacalera-lavapi%C3%A9s-madrid-cuadrado-1024x1024.jpg', 18.00,  'https://pedrogato.com/madrid-photowalk/');
 
--- 2) Insertar horarios (AHORA con DIA_INICIO y CRUZA_MEDIANOCHE)
 
--- Plan 1 (Tour Histórico)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (1,  'VIERNES',   '12:00:00', '16:00:00', false, 1),
-  (2,  'MARTES',    '10:00:00', '14:00:00', false, 1);
+  (1,  'MARTES',    '12:00:00', '16:00:00', FALSE, 1),
+  (2,  'VIERNES',     '10:00:00', '14:00:00', FALSE, 1);
 
--- Plan 2 (Brunch Dominical)
-INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (3,  'LUNES',     '09:00:00', '22:30:00', false, 2),
-  (4,  'MARTES',    '09:00:00', '22:30:00', false, 2),
-  (5,  'MIERCOLES', '09:00:00', '22:30:00', false, 2),
-  (6,  'JUEVES',    '09:00:00', '22:30:00', false, 2),
-  (7,  'VIERNES',   '09:00:00', '22:30:00', false, 2),
-  (8,  'DOMINGO',   '11:00:00', '13:30:00', false, 2);
 
--- Plan 3 (Concierto de Jazz)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (9,  'SABADO',    '20:00:00', '23:00:00', false, 3),
-  (10, 'DOMINGO',   '20:00:00', '23:00:00', false, 3);
+  (3,  'LUNES',      '09:00:00', '22:30:00', FALSE, 2),
+  (4,  'MARTES',     '09:00:00', '22:30:00', FALSE, 2),
+  (5,  'MIERCOLES',  '09:00:00', '22:30:00', FALSE, 2),
+  (6,  'JUEVES',     '09:00:00', '22:30:00', FALSE, 2),
+  (7,  'VIERNES',    '09:00:00', '22:30:00', FALSE, 2),
+  (8,  'DOMINGO',    '11:00:00', '13:30:00', FALSE, 2);
 
--- Plan 4 (Exposición de Arte)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (11, 'LUNES',     '10:00:00', '18:00:00', false, 4),
-  (12, 'MARTES',    '10:00:00', '18:00:00', false, 4),
-  (13, 'MIERCOLES', '10:00:00', '18:00:00', false, 4),
-  (14, 'JUEVES',    '10:00:00', '18:00:00', false, 4),
-  (15, 'VIERNES',   '10:00:00', '18:00:00', false, 4);
+  (9,  'SABADO',     '10:00:00', '01:00:00', TRUE,  3),
+  (10, 'DOMINGO',    '20:00:00', '01:00:00', TRUE,  3);
 
--- Plan 5 (Cine al Aire Libre)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (16, 'VIERNES',   '21:00:00', '23:30:00', false, 5),
-  (17, 'SABADO',    '21:00:00', '23:30:00', false, 5),
-  (18, 'DOMINGO',   '21:00:00', '23:30:00', false, 5);
+  (11, 'LUNES',      '10:00:00', '18:00:00', FALSE, 4),
+  (12, 'MARTES',     '10:00:00', '18:00:00', FALSE, 4),
+  (13, 'MIERCOLES',  '10:00:00', '18:00:00', FALSE, 4),
+  (14, 'JUEVES',     '10:00:00', '18:00:00', FALSE, 4),
+  (15, 'VIERNES',    '10:00:00', '18:00:00', FALSE, 4);
 
--- Plan 6 (Escape Room)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (19, 'LUNES',     '12:00:00', '16:00:00', false, 6),
-  (20, 'MIERCOLES', '12:00:00', '16:00:00', false, 6),
-  (21, 'JUEVES',    '12:00:00', '16:00:00', false, 6),
-  (22, 'VIERNES',   '12:00:00', '16:00:00', false, 6);
+  (16, 'VIERNES',    '21:00:00', '23:30:00', FALSE, 5),
+  (17, 'SABADO',     '21:00:00', '23:30:00', FALSE, 5),
+  (18, 'DOMINGO',    '21:00:00', '23:30:00', FALSE, 5);
 
--- Plan 7 (Visita Torre de Madrid)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (23, 'SABADO',    '10:00:00', '13:00:00', false, 7),
-  (24, 'DOMINGO',   '10:00:00', '13:00:00', false, 7);
+  (19, 'LUNES',      '12:00:00', '16:00:00', FALSE, 6),
+  (20, 'MIERCOLES',  '12:00:00', '16:00:00', FALSE, 6),
+  (21, 'JUEVES',     '12:00:00', '16:00:00', FALSE, 6),
+  (22, 'VIERNES',    '12:00:00', '16:00:00', FALSE, 6);
 
--- Plan 8 (Clases de Yoga)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (25, 'LUNES',     '08:00:00', '09:30:00', false, 8),
-  (26, 'MIERCOLES', '18:00:00', '19:30:00', false, 8);
+  (23, 'SABADO',     '10:00:00', '13:00:00', FALSE, 7),
+  (24, 'DOMINGO',    '10:00:00', '13:00:00', FALSE, 7);
 
--- Plan 9 (Cena Romántica)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (27, 'VIERNES',   '20:00:00', '23:00:00', false, 9),
-  (28, 'SABADO',    '20:00:00', '23:00:00', false, 9);
+  (25, 'LUNES',      '08:00:00', '09:30:00', FALSE, 8),
+  (26, 'MIERCOLES',  '18:00:00', '19:30:00', FALSE, 8);
 
--- Plan 10 (Ruta de Tapas)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (29, 'MARTES',    '17:00:00', '20:00:00', false, 10),
-  (30, 'JUEVES',    '17:00:00', '20:00:00', false, 10);
+  (27, 'VIERNES',    '20:00:00', '23:00:00', FALSE, 9),
+  (28, 'SABADO',     '20:00:00', '23:00:00', FALSE, 9);
 
--- Plan 11 (Feria de Antigüedades)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (31, 'DOMINGO',   '09:00:00', '15:00:00', false, 11);
+  (29, 'MARTES',     '17:00:00', '20:00:00', FALSE, 10),
+  (30, 'JUEVES',     '17:00:00', '20:00:00', FALSE, 10);
 
--- Plan 12 (Teatro al Aire Libre)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (32, 'VIERNES',   '19:00:00', '21:00:00', false, 12),
-  (33, 'SABADO',    '19:00:00', '21:00:00', false, 12);
+  (31, 'DOMINGO',    '09:00:00', '15:00:00', FALSE, 11);
 
--- Plan 13 (Tour Gastronómico)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (34, 'JUEVES',    '12:00:00', '15:00:00', false, 13),
-  (35, 'VIERNES',   '12:00:00', '15:00:00', false, 13);
+  (32, 'VIERNES',    '19:00:00', '21:00:00', FALSE, 12),
+  (33, 'SABADO',     '19:00:00', '21:00:00', FALSE, 12);
 
--- Plan 14 (Trekking en Madrid)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (36, 'SABADO',    '07:00:00', '12:00:00', false, 14),
-  (37, 'DOMINGO',   '07:00:00', '12:00:00', false, 14);
+  (34, 'JUEVES',     '12:00:00', '15:00:00', FALSE, 13),
+  (35, 'VIERNES',    '12:00:00', '15:00:00', FALSE, 13);
 
--- Plan 15 (Fútbol en el Parque)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (38, 'DOMINGO',   '16:00:00', '18:00:00', false, 15);
+  (36, 'SABADO',     '07:00:00', '12:00:00', FALSE, 14),
+  (37, 'DOMINGO',    '07:00:00', '12:00:00', FALSE, 14);
 
--- Plan 16 (Clase de Cocina Española)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (39, 'MARTES',    '18:00:00', '21:00:00', false, 16),
-  (40, 'JUEVES',    '18:00:00', '21:00:00', false, 16);
+  (38, 'DOMINGO',    '16:00:00', '18:00:00', FALSE, 15);
 
--- Plan 17 (Visita al Palacio Real)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (41, 'LUNES',     '10:00:00', '14:00:00', false, 17),
-  (42, 'MIERCOLES', '10:00:00', '14:00:00', false, 17);
+  (39, 'MARTES',     '18:00:00', '21:00:00', FALSE, 16),
+  (40, 'JUEVES',     '18:00:00', '21:00:00', FALSE, 16);
 
--- Plan 18 (Rally en Bicicleta)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (43, 'SABADO',    '10:00:00', '13:00:00', false, 18),
-  (44, 'DOMINGO',   '10:00:00', '13:00:00', false, 18);
+  (41, 'LUNES',      '10:00:00', '14:00:00', FALSE, 17),
+  (42, 'MIERCOLES',  '10:00:00', '14:00:00', FALSE, 17);
 
--- Plan 19 (Fiesta en la Azotea) → cruza medianoche (sábado→domingo)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (45, 'SABADO',    '22:00:00', '02:00:00', true, 19);
+  (43, 'SABADO',     '10:00:00', '13:00:00', FALSE, 18),
+  (44, 'DOMINGO',    '10:00:00', '13:00:00', FALSE, 18);
 
--- Plan 20 (Tour en Segway)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (46, 'MARTES',    '11:00:00', '13:00:00', false, 20),
-  (47, 'JUEVES',    '11:00:00', '13:00:00', false, 20);
+  (45, 'SABADO',     '22:00:00', '02:00:00', TRUE,  19);
 
--- Plan 21 (Noche de Karaoke) → cruza medianoche (viernes→sábado)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (48, 'VIERNES',   '23:00:00', '02:00:00', true, 21);
+  (46, 'MARTES',     '11:00:00', '13:00:00', FALSE, 20),
+  (47, 'JUEVES',     '11:00:00', '13:00:00', FALSE, 20);
 
--- Plan 22 (Desfile de Moda) → horario estándar (sin cruce)
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (49, 'MIERCOLES', '18:00:00', '21:00:00', false, 22);
+  (48, 'VIERNES',    '23:00:00', '02:00:00', TRUE,  21);
 
--- Plan 23 (Picnic en el Retiro) → horario estándar
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (50, 'DOMINGO',   '11:00:00', '14:00:00', false, 23);
+  (49, 'MIERCOLES',  '18:00:00', '21:00:00', FALSE, 22),
+  (50, 'JUEVES',     '18:00:00', '21:00:00', FALSE, 22),
+  (51, 'VIERNES',    '18:00:00', '21:00:00', FALSE, 22);
 
--- Plan 24 (Tour Fotográfico) → horario estándar
 INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
-  (51, 'VIERNES',   '16:00:00', '19:00:00', false, 24);
+  (52, 'DOMINGO',    '11:00:00', '14:00:00', FALSE, 23);
+
+INSERT INTO HORARIO (ID, DIA_INICIO, HORA_INICIO, HORA_FIN, CRUZA_MEDIANOCHE, PLAN_ID) VALUES
+  (53, 'VIERNES',    '16:00:00', '19:00:00', FALSE, 24);

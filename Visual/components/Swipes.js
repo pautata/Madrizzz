@@ -1,4 +1,3 @@
-// components/Swipes.js
 import React, { useState, forwardRef } from 'react'
 import { View, StyleSheet } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
@@ -9,11 +8,9 @@ function InnerSwipes({ users, currentIndex, handleLike, handlePass, swipesRef })
   const [willLike, setWillLike] = useState(false)
   const [willPass, setWillPass] = useState(false)
 
-  // Plan siguiente (puede ser undefined si estamos en el último)
   const nextPlan = users[currentIndex + 1]
 
   const renderLeftActions = () => {
-    // Si no hay nextPlan, devolvemos un placeholder con flex:1 para que el gesto siga activo
     if (!nextPlan) {
       return <View style={styles.emptyPlaceholder} />
     }
@@ -67,7 +64,6 @@ const styles = StyleSheet.create({
   actionContainer: {
     flex: 1
   },
-  // Placeholder que ocupa todo el espacio para permitir el gesto en el último plan
   emptyPlaceholder: {
     flex: 1
   }

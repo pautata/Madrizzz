@@ -1,6 +1,6 @@
-// src/main/java/com/planesmadrid/apimadrid/service/PlanService.java
 package com.planesmadrid.apimadrid.service;
 
+import com.planesmadrid.apimadrid.exception.ResourceNotFoundException;
 import com.planesmadrid.apimadrid.model.Dia;
 import com.planesmadrid.apimadrid.model.Horario;
 import com.planesmadrid.apimadrid.model.Plan;
@@ -24,10 +24,7 @@ public class PlanService {
         return repo.findAll();
     }
 
-    /**
-     * Filtra usando el nuevo método que comprueba diaInicio, horas y precio.
-     * Si horaMax = 00:00, lo interpretamos como fin de jornada (23:59:59).
-     */
+
     public List<Plan> filter(
             Dia dia,
             LocalTime horaMin,
@@ -35,20 +32,16 @@ public class PlanService {
             Double precioMin,
             Double precioMax
     ) {
-        // Si el cliente envía horaMax = 00:00, lo trato como 23:59:59
+        // horaMax = 00:00, lo trato como 23:59:59
         if (horaMax != null && horaMax.equals(LocalTime.MIDNIGHT)) {
             horaMax = LocalTime.of(23, 59, 59);
         }
         return repo.findByOptionalFilters(dia, horaMin, horaMax, precioMin, precioMax);
     }
 
-    /**
-     * Guarda un Plan. Cada Horario que viene en plan.getHorarios()
-     * se marca con cruzaMedianoche = (horaFin < horaInicio).
-     */
     @Transactional
     public Plan save(Plan p) {
-        // Asociar cada Horario al Plan y calcular cruzaMedianoche
+  
         for (Horario h : p.getHorarios()) {
             h.setPlan(p);
             boolean cruza = h.getHoraFin().isBefore(h.getHoraInicio());
@@ -56,8 +49,42 @@ public class PlanService {
         }
         return repo.save(p);
     }
+    
+    @Transactional
+    public Plan update(Long id, Plan payload) {
+        Plan existente = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Plan con id " + id + " no encontrado"));
+
+        existente.setNombre(payload.getNombre());
+        existente.setLocalizacion(payload.getLocalizacion());
+        existente.setPrecio(payload.getPrecio());
+        existente.setImagenUrl(payload.getImagenUrl());
+        existente.setUrl(payload.getUrl());
+
+        existente.getHorarios().clear();
+        for (Horario h : payload.getHorarios()) {
+            h.setPlan(existente);
+            existente.getHorarios().add(h);
+        }
+       
+        fijarRelacionesYCalcularCruce(existente);
+
+        return repo.save(existente);
+    }
+
 
     public void deleteById(Long id) {
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("Plan con id " + id + " no encontrado");
+        }
         repo.deleteById(id);
     }
+    
+    private void fijarRelacionesYCalcularCruce(Plan p) {
+        for (Horario h : p.getHorarios()) {
+            h.setPlan(p);
+            boolean cruza = h.getHoraFin().isBefore(h.getHoraInicio());
+            h.setCruzaMedianoche(cruza);
+        }
+    }
+        
 }

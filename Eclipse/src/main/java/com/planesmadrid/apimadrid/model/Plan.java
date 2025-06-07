@@ -1,4 +1,3 @@
-// src/main/java/com/planesmadrid/apimadrid/model/Plan.java
 package com.planesmadrid.apimadrid.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -7,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PLAN")   // <-- Cambiado de "planes" a "PLAN"
+@Table(name = "PLAN")
 public class Plan {
 
     @Id
@@ -17,18 +16,18 @@ public class Plan {
     private String nombre;
     private String localizacion;
 
-    @Column(name = "imagen_url")
+    @Column(name = "imagen_url", length = 1024)
     private String imagenUrl;
 
     @Column(nullable = false)
     private double precio;
 
-    @Column
+    @Column(length = 1024)
     private String url;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Horario> horarios = new ArrayList<>();
+    private List<Horario> horarios = new ArrayList<>(); // para que los horarios de la lista no serialicen de nuevo el plan asociado y evitar el bucle
 
     public Plan() { }
 

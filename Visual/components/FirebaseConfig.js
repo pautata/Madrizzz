@@ -1,5 +1,3 @@
-// src/components/FirebaseConfig.js
-
 import { initializeApp } from "firebase/app"
 import {
   initializeAuth,
@@ -27,19 +25,10 @@ const firebaseConfig = {
   appId:             "1:938450749179:android:573c7c34781eee2507d25e"
 }
 
-// 1) Inicializa la app de Firebase
 export const app = initializeApp(firebaseConfig)
-
-// 2) Inicializa Auth con persistencia en AsyncStorage
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 })
-
-// 3) Exporta el Auth “estándar” para listeners
 export const defaultAuth = getAuth(app)
-
-// 4) Inicializa y exporta Firestore
 export const db = getFirestore(app)
-
-// 5) Función de cierre de sesión
 export const signOut = () => firebaseSignOut(defaultAuth)

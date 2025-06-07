@@ -1,4 +1,3 @@
-// src/main/java/com/planesmadrid/apimadrid/exception/ResourceNotFoundException.java
 package com.planesmadrid.apimadrid.exception;
 
 import org.springframework.http.HttpStatus;

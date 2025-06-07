@@ -1,4 +1,3 @@
-
 package com.planesmadrid.apimadrid;
 
 import org.springframework.boot.SpringApplication;

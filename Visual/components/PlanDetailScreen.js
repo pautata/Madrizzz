@@ -11,7 +11,14 @@ import {
 export default function PlanDetailScreen({ route, navigation }) {
   const { plan } = route.params
 
-  // Usamos h.diaInicio si existe, o h.dia (para favoritos “viejos”)
+  const formatHora = (horaStr) => {
+    if (!horaStr) return ''
+    const parts = horaStr.split(':')
+    const hh = parts[0].padStart(2, '0')
+    const mm = parts[1].padStart(2, '0')
+    return `${hh}:${mm}`
+  }
+
   const diasUnicos = Array.from(
     new Set(
       plan.horarios.map(h => (h.diaInicio ?? h.dia) ?? '')
@@ -37,7 +44,7 @@ export default function PlanDetailScreen({ route, navigation }) {
           const diaMostrar = h.diaInicio ?? h.dia
           return (
             <Text key={idx} style={styles.line}>
-              • {diaMostrar}: {h.horaInicio}–{h.horaFin}
+              • {diaMostrar}: {formatHora(h.horaInicio)}–{formatHora(h.horaFin)}
             </Text>
           )
         })}

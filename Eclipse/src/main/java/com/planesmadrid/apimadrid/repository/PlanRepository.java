@@ -1,4 +1,3 @@
-// src/main/java/com/planesmadrid/apimadrid/repository/PlanRepository.java
 package com.planesmadrid.apimadrid.repository;
 
 import com.planesmadrid.apimadrid.model.Dia;
@@ -12,14 +11,6 @@ import java.util.List;
 
 public interface PlanRepository extends JpaRepository<Plan, Long> {
 
-    /**
-     * Filtra por día de inicio (diaInicio), horario y precio.
-     * - Si un Horario no cruza medianoche (horaFin >= horaInicio),
-     *   comprobamos: h.horaInicio <= :horaFin Y h.horaFin >= :horaInicio.
-     * - Si cruzaMedianoche = true (h.horaFin < h.horaInicio), 
-     *   solo comprobamos que la parte inicial (h.horaInicio → 23:59) 
-     *   entre en el rango (h.horaInicio <= :horaFin).
-     */
     @Query("""
       SELECT DISTINCT p
         FROM Plan p
@@ -37,8 +28,8 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
     """)
     List<Plan> findByOptionalFilters(
         @Param("dia")       Dia dia,
-        @Param("horaMin")   LocalTime horaMin,   // horaInicio mínima
-        @Param("horaMax")   LocalTime horaMax,   // horaFin máxima
+        @Param("horaMin")   LocalTime horaMin,   
+        @Param("horaMax")   LocalTime horaMax,  
         @Param("precioMin") Double precioMin,
         @Param("precioMax") Double precioMax
     );

@@ -1,5 +1,4 @@
-// components/TermsModal.js
-import React from "react";
+import React from "react"
 import {
   View,
   Text,
@@ -7,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal
-} from "react-native";
+} from "react-native"
 
 export default function TermsModal({ visible, onClose }) {
   return (
@@ -17,10 +16,8 @@ export default function TermsModal({ visible, onClose }) {
           <Text style={styles.title}>Términos y Condiciones de Uso</Text>
           <ScrollView style={styles.scroll}>
             <Text style={styles.text}>
-              Bienvenido a Madrizzz (“la Aplicación”), desarrollada por [Nombre de la Empresa]. Al registrarte y utilizar esta Aplicación, aceptas cumplir con los siguientes términos y condiciones. Si no estás de acuerdo con alguno de los puntos, te recomendamos no continuar con el registro ni el uso de la Aplicación.
-              {"\n\n"}
               1. Introducción{"\n"}
-              Bienvenido a Madrizzz (“la Aplicación”), desarrollada por [Nombre de la Empresa]. Al registrarte y utilizar esta Aplicación, aceptas cumplir con los siguientes términos y condiciones. Si no estás de acuerdo con alguno de los puntos, te recomendamos no continuar con el registro ni el uso de la Aplicación.
+              Bienvenido a Madrizzz, la aplicación de planes desarrollada por Paula Sobreroca Hernández. Al registrarte y utilizar esta Aplicación, aceptas cumplir con los siguientes términos y condiciones. Si no estás de acuerdo con alguno de los puntos, te recomendamos no continuar con el registro ni el uso de la Aplicación.
               {"\n\n"}
               2. Definiciones{"\n"}
               • Usuario: Toda persona física mayor de 18 años que se registra y utiliza la Aplicación.{"\n"}
@@ -81,7 +78,7 @@ export default function TermsModal({ visible, onClose }) {
         </View>
       </View>
     </Modal>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -121,4 +118,4 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-});
+})

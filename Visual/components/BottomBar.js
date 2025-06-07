@@ -6,10 +6,10 @@ export default function BottomBar({ handleLikePress, handlePassPress }) {
   return (
     <View style={styles.container}>
       <View />
-      <TouchableOpacity style={styles.button} onPress={handlePassPress}>
+      <TouchableOpacity testID="pass-button" style={styles.button} onPress={handlePassPress}>
         <FontAwesome name="times" size={27} color="#F06795" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleLikePress}>
+      <TouchableOpacity testID="like-button" style={styles.button} onPress={handleLikePress}>
         <FontAwesome name="heart" size={27} color="#64EDCC" />
       </TouchableOpacity>
       <View />
